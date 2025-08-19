@@ -30,4 +30,8 @@ public interface FolderRepository extends CrudRepository<Folder, String>{
     @Query(value = "UPDATE folder SET name = :name WHERE id = :id", nativeQuery = true)
     public void updateFolder(@Param("id") String id, @Param("name") String name);
 
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM folder WHERE id = :id", nativeQuery = true)
+    public void deleteFolder(@Param("id") String id);
 }

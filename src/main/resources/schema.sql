@@ -1,4 +1,11 @@
- CREATE TABLE folder (
-    id   VARCHAR(50) PRIMARY KEY,
+CREATE TABLE folder (
+    id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE files (
+    id VARCHAR(50) PRIMARY KEY,
+    folderId VARCHAR(50),
+    name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (folderId) REFERENCES folder(id) ON DELETE CASCADE
 );

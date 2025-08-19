@@ -2,13 +2,13 @@ package com.project.noteapp_backend.services;
 
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.stereotype.Service;
-
 import com.project.noteapp_backend.models.Folder;
 import com.project.noteapp_backend.repositories.FolderRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class FolderServices {
     private final FolderRepository folderRepository;
 
@@ -30,6 +30,13 @@ public class FolderServices {
         if (folderRepository.findFolderById(id).size() <= 0) return false;
 
         folderRepository.updateFolder(id, f.getName());
+        return true;
+    }
+
+    public boolean deleteFolder(String id) {
+        if (folderRepository.findFolderById(id).size() <= 0) return false;
+
+        folderRepository.deleteFolder(id);
         return true;
     }
 }
