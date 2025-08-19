@@ -27,7 +27,6 @@ public class FolderRestController {
 
     @GetMapping("")
     public List<Folder> getFolders() {
-        System.out.println(1);
         return folderServices.GetAllFolders();
     }
 

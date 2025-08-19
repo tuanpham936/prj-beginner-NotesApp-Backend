@@ -5,7 +5,7 @@ CREATE TABLE folder (
 
 CREATE TABLE files (
     id VARCHAR(50) PRIMARY KEY,
-    folderId VARCHAR(50),
+    folder_id VARCHAR(50),
     name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (folderId) REFERENCES folder(id) ON DELETE CASCADE
+    FOREIGN KEY (folder_id) REFERENCES folder(id) ON DELETE CASCADE
 );

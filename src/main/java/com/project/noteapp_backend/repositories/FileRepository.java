@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface FileRepository extends CrudRepository<Folder, String> {
-    @Query(value = "SELECT * FROM files WHERE folderId = :folderId", nativeQuery = true)
+    @Query(value = "SELECT * FROM files WHERE folder_id = :folderId", nativeQuery = true)
     public List<File> findFilesByFolderId(@Param("folderId") String folderId);
 
     
@@ -26,11 +26,11 @@ public interface FileRepository extends CrudRepository<Folder, String> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE files SET (folderId = :folderId, name = :name) WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE files SET folder_id = :folderId, name = :name WHERE id = :id", nativeQuery = true)
     public void putFile(@Param("id") String id, @Param("folderId") String folderId, @Param("name") String name);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM files WHERE id = :id and folderId = :folderId", nativeQuery = true)
+    @Query(value = "DELETE FROM files WHERE id = :id and folder_id = :folderId", nativeQuery = true)
     public void deleteFile(@Param("id") String id, @Param("folderId") String folderId);
 }

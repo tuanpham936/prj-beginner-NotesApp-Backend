@@ -44,7 +44,7 @@ public class FileRestController {
         }
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("")
     public ResponseEntity putFile(@RequestBody File file) {
         try {
             if (fileServices.UpdateFile(file)) return ResponseEntity.status(200).body(null);
