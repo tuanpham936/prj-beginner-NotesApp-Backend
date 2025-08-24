@@ -1,11 +1,18 @@
 package com.project.noteapp_backend.services;
 
+import java.io.IOException;
+
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.noteapp_backend.repositories.NoteRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class NoteServices {
     private final NoteRepository noteRepository;
 
@@ -26,5 +33,14 @@ public class NoteServices {
         catch (Exception e) {
             return null;
         }
+    }
+
+    public boolean PostNewNote(String id, MultipartFile note) throws IOException  {
+        System.out.println(1);
+        if (noteRepository.findNoteById(id).exists()) return false;
+
+        noteRepository.postNote(id, note);
+        System.out.println(4);
+        return true;
     }
 }
