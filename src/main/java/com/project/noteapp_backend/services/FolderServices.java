@@ -3,6 +3,8 @@ package com.project.noteapp_backend.services;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+
+import com.project.noteapp_backend.models.File;
 import com.project.noteapp_backend.models.Folder;
 import com.project.noteapp_backend.repositories.FolderRepository;
 import jakarta.transaction.Transactional;
@@ -11,9 +13,11 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class FolderServices {
     private final FolderRepository folderRepository;
+    private final FileServices fileServices;
 
-    public FolderServices(FolderRepository folderRepository) {
+    public FolderServices(FolderRepository folderRepository, FileServices fileServices) {
         this.folderRepository = folderRepository;
+        this.fileServices = fileServices;
     }
 
     public List<Folder> GetAllFolders() {
@@ -36,6 +40,10 @@ public class FolderServices {
     public boolean deleteFolder(String id) {
         if (folderRepository.findFolderById(id).size() <= 0) return false;
 
+        List<File> files = fileServices.GetFilesByFolderId(id);
+        for (File file : files) {
+            if (!fileServices.DeleteFile(file)) return false;
+        }
         folderRepository.deleteFolder(id);
         return true;
     }

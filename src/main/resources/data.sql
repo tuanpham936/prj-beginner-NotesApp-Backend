@@ -1,1 +1,0 @@
-INSERT INTO folder(id, name) VALUES ('abc-123', 'Folder xịn');

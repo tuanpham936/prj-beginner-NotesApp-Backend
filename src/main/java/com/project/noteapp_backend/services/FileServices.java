@@ -11,9 +11,11 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class FileServices {
     private final FileRepository fileRepository;
+    private final NoteServices noteServices;
 
-    public FileServices(FileRepository fileRepository) {
+    public FileServices(FileRepository fileRepository, NoteServices noteServices) {
         this.fileRepository = fileRepository;
+        this.noteServices = noteServices;
     }
 
     public List<File> GetFilesByFolderId(String folderId) {
@@ -35,7 +37,8 @@ public class FileServices {
 
     public boolean DeleteFile(File f) {
         if (fileRepository.findFileById(f.getId()).isEmpty()) return false;
-
+        
+        noteServices.DeleteNote(f.getId());
         fileRepository.deleteFile(f.getId(), f.getFolderId());
         return true;
     }

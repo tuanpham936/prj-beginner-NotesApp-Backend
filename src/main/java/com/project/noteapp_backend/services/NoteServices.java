@@ -40,4 +40,18 @@ public class NoteServices {
         noteRepository.postNote(id, note);
         return true;
     }
+
+    public boolean UpdateNote(String id, MultipartFile note) throws IOException {
+        if (noteRepository.findNoteById(id) == null) return false;
+
+        noteRepository.updateNote(id, note);
+        return true;
+    }
+
+    public boolean DeleteNote(String id) {
+        if (noteRepository.findNoteById(id) == null) return true;
+
+        noteRepository.deleteNote(id);
+        return true;
+    }
 }

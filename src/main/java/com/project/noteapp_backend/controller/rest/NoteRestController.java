@@ -1,6 +1,5 @@
 package com.project.noteapp_backend.controller.rest;
 
-import java.io.IOException;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.project.noteapp_backend.services.NoteServices;
-
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/note")
@@ -33,6 +32,18 @@ public class NoteRestController {
     public ResponseEntity postNote(@PathVariable String id, @RequestParam("note") MultipartFile note) {
         try {
             if (noteServices.PostNewNote(id, note)) return ResponseEntity.status(201).body(null);
+            else return ResponseEntity.status(400).body(null);
+        }
+        catch (Exception e) {
+            System.out.println(0);
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity putNote(@PathVariable String id, @RequestParam("note") MultipartFile note) {
+        try {
+            if (noteServices.UpdateNote(id, note)) return ResponseEntity.status(200).body(null);
             else return ResponseEntity.status(400).body(null);
         }
         catch (Exception e) {
