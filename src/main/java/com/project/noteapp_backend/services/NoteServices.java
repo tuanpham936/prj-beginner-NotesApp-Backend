@@ -2,7 +2,6 @@ package com.project.noteapp_backend.services;
 
 import java.io.IOException;
 
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,12 +34,10 @@ public class NoteServices {
         }
     }
 
-    public boolean PostNewNote(String id, MultipartFile note) throws IOException  {
-        System.out.println(1);
-        if (noteRepository.findNoteById(id).exists()) return false;
+    public boolean PostNewNote(String id, MultipartFile note) throws IOException {
+        if (noteRepository.findNoteById(id) != null) return false;
 
         noteRepository.postNote(id, note);
-        System.out.println(4);
         return true;
     }
 }

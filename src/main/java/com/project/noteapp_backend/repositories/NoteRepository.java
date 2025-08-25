@@ -1,15 +1,17 @@
 package com.project.noteapp_backend.repositories;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.aspectj.apache.bcel.util.ClassPath;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
-import java.io.FileWriter;
 
 @Repository
 public class NoteRepository {
@@ -24,13 +26,15 @@ public class NoteRepository {
     }
 
     public void postNote(String id, MultipartFile note) throws IOException {
-        String fileName = id + ".txt";
+        File folder = new File(localStorageAbsolutePath);
+        if (!folder.exists()) {
+            System.out.println(1);
+            folder.mkdirs();
+        }
         
-        System.out.println(2);
-        File file = new File(localStorageAbsolutePath, fileName);
-        FileWriter writer = new FileWriter(file);
-        writer.write(note.getResource().getContentAsString(null));
-        writer.close();
-        System.out.println(3);
+        File file = new File(folder, note.getOriginalFilename());
+        
+        // note.transferTo(file);
+        Files.write(Paths.get(file.getAbsolutePath()), note.getBytes());
     }
 }
